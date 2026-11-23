@@ -17,7 +17,7 @@
 <p class="readout" id="readout" aria-live="polite"></p></section>
 <div class="split"><section><h2>The highlight reel</h2><div class="rows" id="highlights"></div></section><section><h2>Under the hood</h2><div class="rows" id="tokens"></div></section></div>
 <section style="margin-bottom:36px"><h2>Models on rotation</h2><p class="coverage">Share of recorded input and output tokens</p><div class="rows" id="models"></div></section>
-<details><summary>How this was counted</summary><p id="method"></p><p>Counts come from local active and archived Codex logs on this device. Deleted logs, other devices, and cloud-only usage may be missing. Active days include recorded turn starts, tool calls, or token usage. Each chat or subagent session is counted once if it had activity in the window.</p><p>Turn starts include recorded Codex turns across primary and subagent sessions. Tool calls count recorded invocations across primary and subagent sessions. Tokens use recorded per-call usage, skipping repeated cumulative snapshots within a log. Cached input is part of input. Reasoning tokens are reported separately and can overlap output. These counts measure recorded activity. Billing and plan limits are tracked separately.</p></details>
+<details><summary>How this was counted</summary><p id="method"></p><p>Counts come from local active and archived Codex logs from the selected sources. Deleted logs, devices whose logs were omitted, and cloud-only usage may be missing. Overlapping logs are merged by session ID and duplicate events are counted once. Active days include recorded turn starts, tool calls, or token usage. Each chat or subagent session is counted once if it had activity in the window.</p><p>Turn starts include recorded Codex turns across primary and subagent sessions. Tool calls count recorded invocations across primary and subagent sessions. Tokens use recorded per-call usage, skipping repeated cumulative snapshots within a log. Cached input is part of input. Reasoning tokens are reported separately and can overlap output. These counts measure recorded activity. Billing and plan limits are tracked separately.</p></details>
 </main>
 <script>
 const data=__DATA__;
@@ -73,7 +73,7 @@ for(const [model,value] of Object.entries(data.models).sort((a,b)=>b[1]-a[1])){
  const track=add(byId('models'),'div',undefined,'track');
  add(track,'div',undefined,'bar').style.width=100*value/(totalTokens||1)+'%';
 }
-byId('method').textContent=number.format(data.files)+' distinct local log files found. '+number.format(data.usage)+' sessions had recorded token usage.'+(data.skipped?' '+data.skipped+' compressed logs were skipped because zstd was unavailable.':'')+(data.errors?' '+data.errors+' read or parse errors occurred.':'');
+byId('method').textContent=number.format(data.files)+' log files found across '+number.format(data.session_logs)+' distinct sessions. '+number.format(data.usage)+' sessions had recorded token usage.'+(data.skipped?' '+data.skipped+' compressed logs were skipped because zstd was unavailable.':'')+(data.errors?' '+data.errors+' read or parse errors occurred.':'');
 const calendar=byId('calendar'), metric=byId('metric'), readout=byId('readout');
 const labels={turns:'turn starts',tools:'tool calls',tokens:'tokens'};
 const colors=['#324164','#466f87','#508fa0','#66b9b9','#a4f4df'];
