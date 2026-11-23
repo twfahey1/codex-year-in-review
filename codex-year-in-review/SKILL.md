@@ -11,6 +11,6 @@ Run [the report generator](scripts/report.py) using Python 3.9 or later. Pass th
 python3 /path/to/skill/scripts/report.py --timezone America/Chicago --output /path/to/private/codex-review.html
 ```
 
-The script reads active and archived rollouts under `CODEX_HOME` (default `~/.codex`). Use `--codex-home` to select another local Codex directory if requested. Compressed rollouts require `zstd` on PATH. The report identifies skipped compressed files and read errors. Call out incomplete coverage when summarizing the report.
+The script reads active and archived rollouts under `CODEX_HOME` (default `~/.codex`). To include another Mac or backup, add `--include-logs /path/to/old-codex`. Repeat for each additional Codex home or directory containing rollout files. The script merges overlapping sessions and deduplicates matching events. Use `--codex-home` only to replace the default primary Codex directory. Read only the rollout directories from a backup. Compressed rollouts require `zstd` on PATH. The report identifies skipped compressed files and read errors. Call out incomplete coverage when summarizing the report.
 
 Present the HTML as a local file link. If Codex can display a localhost preview, serve only the report directory on loopback and open it in the side panel. Keep the report, raw logs, and usage figures local unless the user separately requests sharing. The output includes aggregate activity and model labels. It contains no conversation text, tool arguments, thread IDs, or workspace paths.
